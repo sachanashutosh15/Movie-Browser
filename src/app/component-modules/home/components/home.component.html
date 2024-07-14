@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+  <section class="movies-section" #scrollContainer>
+    <div class="search-container">
+      <div class="search-filter">
+        <div class="genre-select" (click)="handleFiltering()">Genre Filter</div>
+        <div *ngIf="isFilterOn" class="genre-display">
+          <span
+            class="genre-chip"
+            [ngClass]="{ 'selected-chip': genre.isSelected }"
+            *ngFor="let genre of genreList"
+            (click)="toggleGenreSelection(genre)"
+          >
+            {{ genre.name }}
+          </span>
+        </div>
+        <input
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="performSearch()"
+          class="input-box"
+          type="text"
+          placeholder="Search"
+        />
+      </div>
+      <div class="favourites">
+        <mat-icon (click)="showFavMovies()" class="favourite-icon"
+          >favorite</mat-icon
+        >
+        <div *ngIf="typeOfFavCount$ === 'number'" class="favourites-count">
+          {{ favCount$ }}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="moviesList$ | async as moviesList; else noMoviesToShow">
+      <div
+        *ngIf="moviesList.length > 0; else noMoviesToShow"
+        class="movies-list"
+      >
+        <div *ngFor="let movie of moviesList">
+          <apf-movie-card
+            [movieDetails]="movie"
+            [genres]="getGenreList(movie.genre_ids)"
+            (markFavourite)="markAsFavourite($event)"
+            (removeFavourite)="removeFromFavourites($event)"
+          ></apf-movie-card>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #noMoviesToShow>
+  <div class="no-movies">
+    <h3>No Movies to Show</h3>
+  </div>
+</ng-template>

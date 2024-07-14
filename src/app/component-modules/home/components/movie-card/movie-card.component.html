@@ -1,0 +1,38 @@
+<div class="movie-card">
+  <span class="image-container">
+    <img class="image" [src]="imageUrl" [alt]="movieDetails.title" />
+  </span>
+  <ng-container *ngTemplateOutlet="movieDetailsCard"></ng-container>
+</div>
+
+<ng-template #movieDetailsCard>
+  <div class="movie-details">
+    <h4 class="label">{{ movieDetails.title }}</h4>
+    Release Date:
+    <h4 class="label">{{ movieDetails.release_date }}</h4>
+    <div class="genres-container" *ngIf="genres.length; else notAvailable">
+      Genres:
+      <span class="genre-chip" *ngFor="let genre of genres">{{ genre }}</span>
+    </div>
+    <button
+      class="fav-button"
+      [ngClass]="{ 'disabled-button': movieDetails.isFavourite }"
+      (click)="markAsFavourite(movieDetails)"
+      [disabled]="movieDetails.isFavourite"
+    >
+      Add To Favorites
+    </button>
+    <button
+      class="fav-button"
+      [ngClass]="{ 'disabled-button': !movieDetails.isFavourite }"
+      (click)="removeFromFavourites(movieDetails)"
+      [disabled]="!movieDetails.isFavourite"
+    >
+      Remove
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #notAvailable>
+  <span>Genres: N/A</span>
+</ng-template>

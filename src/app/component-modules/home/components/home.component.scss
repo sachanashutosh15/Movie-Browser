@@ -1,0 +1,142 @@
+.container {
+  padding: 0 4px 4px 4px;
+  height: calc(100vh - 36px);
+}
+
+.movies-section {
+  height: calc(100% - 4px);
+  overflow: auto;
+  position: relative;
+  border: 2px solid #673ab7;
+  border-radius: 8px;
+}
+
+.search-container {
+  margin: 4px 16px;
+  position: sticky;
+  top: 2px;
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-filter {
+  display: flex;
+}
+
+.input-box {
+  height: 26px;
+  border-radius: 13px;
+  border: 1px solid #673ab7;
+  padding: 8px;
+  color: #673ab7;
+  position: absolute;
+  left: 96px;
+}
+
+.movies-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.movies-section::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.movies-section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.movies-section::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #555;
+}
+
+.movies-section::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.favourite-icon {
+  position: relative;
+  top: -3px;
+  color: red;
+  font-size: 32px;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+}
+
+.favourites-count {
+  position: relative;
+  top: -40px;
+  right: -20px;
+  color: white;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  align-items: center;
+  background: rgba(103, 58, 183, 0.7);
+}
+
+.no-movies {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.genre-select {
+  position: absolute;
+  left: -10px;
+  height: 26px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 13px;
+  background-color: #673ab7;
+  border: 1px solid #673ab7;
+  color: white;
+  cursor: pointer;
+}
+
+.genre-display {
+  width: 224px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  top: 32px;
+  left: -8px;
+  border: 1px solid #673ab7;
+  background-color: white;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.genre-chip {
+  border: 1px solid rgba(103, 58, 183, 0.4);
+  border-radius: 12px;
+  margin: 1px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+.selected-chip {
+  background-color: #673ab7;
+  color: white;
+}
