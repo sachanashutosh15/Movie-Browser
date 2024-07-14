@@ -64,6 +64,7 @@ As it is a small project and almost everything is present inside `home` except `
 ### AppModule
 
 `AppModule` bootstraps `AppComponent` which renders `HeaderComponent` and has `Outlet` for other components coming from different routes. `AppRoutingModule` redirects all paths to `/home`.
+
 `AppModule` also registers an `interceptor` which adds accesstoken to every http request.
 
 ### HeaderModule
@@ -84,7 +85,8 @@ As it is a small project and almost everything is present inside `home` except `
 ##### HomeService
 
 `homeService`: has methods to fetch movieslist for search queries, filter requests, popular movies list.
-homeService uses an `AppConfigService` which `provides the baseUrls`, accessToken for `TMDB APIs`.
+
+HomeService also uses an `AppConfigService` which `provides the baseUrls`, accessToken for `TMDB APIs`.
 
 ##### FavouritesService
 
