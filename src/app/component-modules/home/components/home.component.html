@@ -23,12 +23,17 @@
         />
       </div>
       <div class="favourites">
-        <mat-icon (click)="showFavMovies()" class="favourite-icon"
+        <mat-icon (click)="toggleFavMovies()" class="favourite-icon"
           >favorite</mat-icon
         >
         <div *ngIf="typeOfFavCount$ === 'number'" class="favourites-count">
           {{ favCount$ }}
         </div>
+      </div>
+    </div>
+    <div class="activity-label-container">
+      <div class="activity-name">
+        {{ getActivityName() }}
       </div>
     </div>
     <div *ngIf="moviesList$ | async as moviesList; else noMoviesToShow">
@@ -51,6 +56,9 @@
 
 <ng-template #noMoviesToShow>
   <div class="no-movies">
-    <h3>No Movies to Show</h3>
+    <h3>No movies to show please add some</h3>
+    <button class="fav-button" (click)="showPopularMovies()">
+      Popular Movies
+    </button>
   </div>
 </ng-template>

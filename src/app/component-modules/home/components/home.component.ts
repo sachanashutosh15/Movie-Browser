@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   searchQuery = '';
   searchSubject = new Subject<void>();
 
+  totalPages!: number;
+
   favCount!: number;
   get favCount$() {
     return this.favCount;
@@ -99,7 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private initializeSearchActivity() {
     this.searchSubject
       .pipe(
-        debounceTime(200),
+        debounceTime(700),
         switchMap(() => {
           if (this.searchQuery == '') {
             this.resetActivityToDefault();
@@ -117,6 +119,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (res: MoviesList) => {
           if (res.results) {
             this.currActivity = 'search';
+            this.totalPages = res.total_pages;
             this.updateMoviesList(
               res.results.map((movieDetails) => {
                 return {
@@ -187,9 +190,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.pageNumber++;
         this.isLoading = false;
       } else {
-        if (this.currActivity == 'search') {
+        if (
+          this.currActivity == 'search' &&
+          this.pageNumber <= this.totalPages
+        ) {
           this.updateMoviesListForSearch();
-        } else if (this.currActivity == 'filter') {
+        } else if (
+          this.currActivity == 'filter' &&
+          this.pageNumber <= this.totalPages
+        ) {
           this.updateMoviesListForFilter();
         }
       }
@@ -247,6 +256,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private updateMoviesListNPage(res: MoviesList) {
+    this.totalPages = res.total_pages;
     this.moviesList = [
       ...this.moviesList,
       ...res.results.map((movieDetails) => ({
@@ -295,10 +305,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.refreshFavCount$.next();
   }
 
-  showFavMovies() {
-    this.favCount = this.favouritesService.getFavMoviesCount();
-    this.currActivity = 'favourites';
-    this.moviesList = this.favouritesService.getFavMoviesList();
+  toggleFavMovies() {
+    if (this.currActivity == 'favourites') {
+      this.showPopularMovies();
+    } else {
+      this.favCount = this.favouritesService.getFavMoviesCount();
+      this.currActivity = 'favourites';
+      this.moviesList = this.favouritesService.getFavMoviesList();
+    }
   }
 
   toggleGenreSelection(genre: Genre) {
@@ -341,6 +355,25 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isFilterOn = false;
     } else {
       this.isFilterOn = true;
+    }
+  }
+
+  showPopularMovies() {
+    this.currActivity = 'default';
+    this.moviesList = [];
+    this.pageNumber = 1;
+    this.updatePopularMoviesList();
+  }
+
+  getActivityName() {
+    if (this.currActivity == 'search') {
+      return 'Search Results';
+    } else if (this.currActivity == 'filter') {
+      return 'Filtered Results';
+    } else if (this.currActivity == 'favourites') {
+      return 'Favourite Movies';
+    } else {
+      return 'Popular Movies';
     }
   }
 }

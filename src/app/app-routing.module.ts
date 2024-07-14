@@ -8,9 +8,8 @@ const routes: Routes = [
       import('./component-modules/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: '',
+    path: '**',
     redirectTo: '/home',
-    pathMatch: 'full',
   },
 ];
 

@@ -97,6 +97,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .genre-select {
@@ -139,4 +142,22 @@
 .selected-chip {
   background-color: #673ab7;
   color: white;
+}
+
+.activity-label-container {
+  display: flex;
+  justify-content: center;
+  color: #673ab7;
+  font-size: 18px;
+  font-weight: 500;
+  position: sticky;
+  top: 30px;
+}
+
+.activity-name {
+  background-color: white;
+  display: flex;
+  padding: 4px 8px;
+  border: 1px solid #673ab7;
+  border-radius: 14px;
 }
